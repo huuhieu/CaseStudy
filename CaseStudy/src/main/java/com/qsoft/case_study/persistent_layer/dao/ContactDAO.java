@@ -10,9 +10,5 @@ import java.util.ArrayList;
  */
 public class ContactDAO {
 
-    public static ArrayList<ContactEntity> getContactOf(CustomerEntity customer) {
-        String sql = "select * from contact where customer_customer_id = ?;";
 
-        
-    }
 }

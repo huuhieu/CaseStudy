@@ -55,8 +55,8 @@
       <column name="order_order_id" sqlType="INT" length="10" precision="0" nullable="false" jdbcType="4"/>
       <column name="quantityOrdered" sqlType="INT" length="10" precision="0" nullable="false" jdbcType="4"/>
       <primary-key name="PRIMARY" columns="product_product_id,order_order_id"/>
-      <foreign-key name="fk_product_has_order_product1" columns="product_product_id" ref-table="product" ref-schema="" ref-catalog="casestudy" ref-columns="product_id" update-rule="0" delete-rule="0" deferrability="2"/>
       <foreign-key name="fk_product_has_order_order1" columns="order_order_id" ref-table="order" ref-schema="" ref-catalog="casestudy" ref-columns="order_id" update-rule="0" delete-rule="0" deferrability="2"/>
+      <foreign-key name="fk_product_has_order_product1" columns="product_product_id" ref-table="product" ref-schema="" ref-catalog="casestudy" ref-columns="product_id" update-rule="0" delete-rule="0" deferrability="2"/>
       <index name="fk_product_has_order_order1_idx" unique="false" columns="order_order_id"/>
       <index name="fk_product_has_order_product1_idx" unique="false" columns="product_product_id"/>
     </table>
