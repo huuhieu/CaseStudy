@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component name="dataSourceStorage">
+  <data-source source="LOCAL" name="MySQL - casestudy@localhost" uuid="ab852a5d-4e87-4897-877b-b1163a7ffca3">
+    <database-info product="MySQL" version="5.6.16" jdbc-version="4.0" driver-name="MySQL Connector Java" driver-version="mysql-connector-java-5.1.26 ( Revision: ${bzr.revision-id} )">
+      <extra-name-characters>#@</extra-name-characters>
+      <identifier-quote-string>`</identifier-quote-string>
+    </database-info>
+    <case-sensitivity plain-identifiers="lower" quoted-identifiers="lower"/>
+    <schema name="" catalog="casestudy"/>
+    <table name="contact" schema="" catalog="casestudy" type="TABLE">
+      <column name="contact_id" sqlType="INT" length="10" precision="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="contact_name" sqlType="VARCHAR" length="100" precision="0" nullable="false" jdbcType="12"/>
+      <column name="contact_phone" sqlType="VARCHAR" length="50" precision="0" nullable="false" jdbcType="12"/>
+      <column name="contact_email" sqlType="VARCHAR" length="50" precision="0" nullable="false" jdbcType="12"/>
+      <column name="contact_job_title" sqlType="VARCHAR" length="100" precision="0" nullable="false" jdbcType="12"/>
+      <column name="customer_customer_id" sqlType="INT" length="10" precision="0" nullable="false" jdbcType="4"/>
+      <column name="contact_is_main" sqlType="TINYINT" length="3" precision="0" nullable="false" jdbcType="-6" def="MA=="/>
+      <primary-key name="PRIMARY" columns="contact_id"/>
+      <foreign-key name="fk_contact_customer" columns="customer_customer_id" ref-table="customer" ref-schema="" ref-catalog="casestudy" ref-columns="customer_id" update-rule="0" delete-rule="0" deferrability="2"/>
+      <exported-key name="fk_order_contact1" table="order" schema="" catalog="casestudy" columns="contact_contact_id"/>
+      <index name="fk_contact_customer_idx" unique="false" columns="customer_customer_id"/>
+    </table>
+    <table name="customer" schema="" catalog="casestudy" type="TABLE">
+      <column name="customer_id" sqlType="INT" length="10" precision="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="customer_name" sqlType="VARCHAR" length="100" precision="0" nullable="false" jdbcType="12"/>
+      <column name="customer_address" sqlType="VARCHAR" length="250" precision="0" nullable="false" jdbcType="12"/>
+      <column name="customer_phone" sqlType="VARCHAR" length="50" precision="0" nullable="false" jdbcType="12"/>
+      <column name="customer_fax" sqlType="VARCHAR" length="50" precision="0" nullable="false" jdbcType="12"/>
+      <primary-key name="PRIMARY" columns="customer_id"/>
+      <exported-key name="fk_contact_customer" table="contact" schema="" catalog="casestudy" columns="customer_customer_id"/>
+      <exported-key name="fk_customer_has_product_customer1" table="equipment" schema="" catalog="casestudy" columns="customer_customer_id"/>
+    </table>
+    <table name="equipment" schema="" catalog="casestudy" type="TABLE">
+      <column name="customer_customer_id" sqlType="INT" length="10" precision="0" nullable="false" jdbcType="4"/>
+      <column name="product_product_id" sqlType="INT" length="10" precision="0" nullable="false" jdbcType="4"/>
+      <column name="equipment_id" sqlType="INT" length="10" precision="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <primary-key name="PRIMARY" columns="equipment_id"/>
+      <foreign-key name="fk_customer_has_product_customer1" columns="customer_customer_id" ref-table="customer" ref-schema="" ref-catalog="casestudy" ref-columns="customer_id" update-rule="0" delete-rule="0" deferrability="2"/>
+      <foreign-key name="fk_customer_has_product_product1" columns="product_product_id" ref-table="product" ref-schema="" ref-catalog="casestudy" ref-columns="product_id" update-rule="0" delete-rule="0" deferrability="2"/>
+      <index name="fk_customer_has_product_customer1_idx" unique="false" columns="customer_customer_id"/>
+      <index name="fk_customer_has_product_product1_idx" unique="false" columns="product_product_id"/>
+    </table>
+    <table name="order" schema="" catalog="casestudy" type="TABLE">
+      <column name="order_id" sqlType="INT" length="10" precision="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="order_creation_date" sqlType="DATE" length="10" precision="0" nullable="false" jdbcType="91"/>
+      <column name="order_updated_date" sqlType="DATE" length="10" precision="0" nullable="false" jdbcType="91"/>
+      <column name="contact_contact_id" sqlType="INT" length="10" precision="0" nullable="false" jdbcType="4"/>
+      <primary-key name="PRIMARY" columns="order_id"/>
+      <foreign-key name="fk_order_contact1" columns="contact_contact_id" ref-table="contact" ref-schema="" ref-catalog="casestudy" ref-columns="contact_id" update-rule="0" delete-rule="0" deferrability="2"/>
+      <exported-key name="fk_product_has_order_order1" table="order_detail" schema="" catalog="casestudy" columns="order_order_id"/>
+      <index name="fk_order_contact1_idx" unique="false" columns="contact_contact_id"/>
+    </table>
+    <table name="order_detail" schema="" catalog="casestudy" type="TABLE">
+      <column name="product_product_id" sqlType="INT" length="10" precision="0" nullable="false" jdbcType="4"/>
+      <column name="order_order_id" sqlType="INT" length="10" precision="0" nullable="false" jdbcType="4"/>
+      <column name="quantityOrdered" sqlType="INT" length="10" precision="0" nullable="false" jdbcType="4"/>
+      <primary-key name="PRIMARY" columns="product_product_id,order_order_id"/>
+      <foreign-key name="fk_product_has_order_product1" columns="product_product_id" ref-table="product" ref-schema="" ref-catalog="casestudy" ref-columns="product_id" update-rule="0" delete-rule="0" deferrability="2"/>
+      <foreign-key name="fk_product_has_order_order1" columns="order_order_id" ref-table="order" ref-schema="" ref-catalog="casestudy" ref-columns="order_id" update-rule="0" delete-rule="0" deferrability="2"/>
+      <index name="fk_product_has_order_order1_idx" unique="false" columns="order_order_id"/>
+      <index name="fk_product_has_order_product1_idx" unique="false" columns="product_product_id"/>
+    </table>
+    <table name="product" schema="" catalog="casestudy" type="TABLE">
+      <column name="product_id" sqlType="INT" length="10" precision="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="product_manufacturer" sqlType="VARCHAR" length="100" precision="0" nullable="false" jdbcType="12"/>
+      <column name="product_model" sqlType="VARCHAR" length="45" precision="0" nullable="false" jdbcType="12"/>
+      <column name="product_year" sqlType="YEAR" length="0" precision="0" nullable="false" jdbcType="91"/>
+      <column name="product_description" sqlType="TEXT" length="65535" precision="0" nullable="false" jdbcType="-1"/>
+      <column name="product_price" sqlType="DOUBLE" length="22" precision="0" nullable="false" jdbcType="8"/>
+      <primary-key name="PRIMARY" columns="product_id"/>
+      <exported-key name="fk_customer_has_product_product1" table="equipment" schema="" catalog="casestudy" columns="product_product_id"/>
+      <exported-key name="fk_product_has_order_product1" table="order_detail" schema="" catalog="casestudy" columns="product_product_id"/>
+    </table>
+  </data-source>
+</component>
